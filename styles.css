@@ -16,7 +16,37 @@ body {
 .splash-logo {
     width: 200px;
     height: auto;
+    animation: bounce 1s infinite;
 }
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 3s ease-in-out;
+
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
 h1 {
     font-size: 2.5rem;
     color: #333;
@@ -151,4 +181,31 @@ h4 {
     }
 }
 
-/* friends,groups,  */
+/* friends,groups,activity*/
+.friends {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    height: 100%;
+
+}
+/* Example of custom styles */
+.navbar-brand {
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.rounded-circle img {
+    width: 50px;
+    height: 50px;
+}
