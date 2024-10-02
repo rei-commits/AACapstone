@@ -1,211 +1,25 @@
-/* Basic styles */
 body {
-    font-family: Arial, sans-serif;
     background-color: #f8f9fa;
-}
-/* Splash Screen */
-.splash-screen {
-    background-color: white;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    font-family: Arial, sans-serif;
 }
 
-.splash-logo {
-    width: 200px;
-    height: auto;
-    animation: bounce 1s infinite;
+header {
+    margin: 20px 0;
 }
 
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 3s ease-in-out;
-
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-h1 {
-    font-size: 2.5rem;
-    color: #333;
-}
-
-p {
-    font-size: 1.2rem;
-    #777
-}
-
-
-/* Login-SignUp Screen */
-.login-signup-screen {
-    background-color: #f5f5f5;
-    border-radius: 15px;
-}
-
-.login-logo {
-    width: 100px;
-    height: auto;
-}
-
-h3 { 
-    font-weight: 600;
-    color:#333;
-}
-
-.social-login img {
-    width: 20px;
-    margin-right: 10px;
-}
-
-.social-login button {
-    font-size: 1rem;
-    color: #333;
-    width: 20px;
-    margin-right: 10px;
-}
-
-
-/* Login Form */
-.login-logo {
-    width: 100px;
-    height: auto;
-    margin-bottom: 15px;
-}
-
-h3 {
-    color: #333;
-}
-
-
-
-/* Default styles for mobile-first design */
 .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-}
-h4 {
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-}
-.form-group label {
-    font-weight: bold;
-}
-.form-control {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%; /* Full width for mobile */
-}
-.btn-primary {
-    background-color: #0056B3;
-    border-color: #0056B3;
-    width: 100%; /* Full width for mobile */
-}
-/* Social Sign-Up Buttons */
-.btn-social {
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    padding: 10px;
-    width: 100%;
-    margin: 10px 0;
-}
-.btn-social img {
-    height: 20px;
-    margin-right: 10px;
-}
-/* Larger screens: Tablets (768px and above) */
-@media (min-width: 768px) {
-    .container {
-        width: 75%; /* Slightly larger container */
-        margin: 20px auto; /* Centered on larger screens */
-    }
-    .form-control {
-        width: 80%; /* Reduce width for better alignment */
-        margin: 0 auto; /* Center the input fields */
-    }
-    .d-grid {
-        width: 50%; /* Reduce button width */
-        margin: 0 auto; /* Center the buttons */
-    }
-    .btn-social {
-        width: 50%; /* Social buttons reduced in width */
-        margin: 10px auto;
-    }
+    margin-top: 20px;
 }
 
-
-
-/* Larger screens: Desktops (1024px and above) */
-@media (min-width: 1024px) {
-    .container {
-        width: 50%; /* Smaller, centered container */
-        margin: 30px auto; /* More margin for desktop */
-    }
-    .form-control {
-        width: 60%; /* Make the form elements smaller */
-        margin: 0 auto; /* Center the input fields */
-    }
-    .d-grid {
-        width: 40%; /* Smaller buttons */
-        margin: 0 auto; /* Center the buttons */
-    }
-    .btn-social {
-        width: 40%; /* Social buttons reduced in width */
-        margin: 10px auto;
-    }
+#receiptContainer img {
+    max-width: 100%;
+    margin-top: 10px;
 }
 
-/* friends,groups,activity*/
-.friends {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    height: 100%;
-
-}
-/* Example of custom styles */
-.navbar-brand {
-    font-weight: bold;
+#expenseCalculator {
+    margin-top: 30px;
 }
 
-.card {
-    border-radius: 15px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.rounded-circle img {
-    width: 50px;
-    height: 50px;
+button {
+    margin-top: 10px;
 }
