@@ -1,25 +1,93 @@
+/* Apply a full-screen animated gradient background */
 body {
-    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
 }
 
-header {
-    margin: 20px 0;
+/* Keyframes for the animated background gradient */
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.container {
+/* Fade-in animation for the entire body */
+@keyframes fadeIn {
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Add transition to make the title slide in from the top */
+.animated-title {
+    transform: translateY(-50px);
+    opacity: 0;
+    animation: slideIn 1.5s ease-in-out forwards;
+    color: white;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Subtitle appears with a slight delay */
+.animated-subtitle {
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeUp 2s ease-in-out forwards;
+    animation-delay: 0.5s;
+    color: white;
+}
+
+@keyframes fadeUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Add animation to the button */
+.animated-btn {
+    opacity: 0;
+    animation: buttonFadeIn 2s ease-in-out forwards;
+    animation-delay: 1s;
     margin-top: 20px;
 }
 
-#receiptContainer img {
-    max-width: 100%;
-    margin-top: 10px;
-}
-
-#expenseCalculator {
-    margin-top: 30px;
-}
-
-button {
-    margin-top: 10px;
+@keyframes buttonFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
