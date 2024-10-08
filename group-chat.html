@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Chat Box -->
+        <div class="col-md-9 mx-auto">
+            <div class="chatbox p-4">
+                <div class="messages" id="chatMessages">
+                    <!-- Messages will appear here -->
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <input type="text" id="chatInput" class="form-control" placeholder="Type a message">
+                    <button id="sendBtn" class="btn btn-primary ms-2">Send</button>
+                </div>
+
+                <!-- Docker for Actions -->
+                <div class="docker mt-3">
+                    <button class="btn btn-secondary" id="shareLinkBtn">Share Link</button>
+                    <button class="btn btn-secondary" id="uploadReceiptBtn">Upload Receipt</button>
+                    <button class="btn btn-secondary" id="payOptionBtn">Payment Option</button>
+                    <button class="btn btn-danger" id="endChatBtn">End Chat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Sidebar -->
+<div class="modal fade" id="sidebarModal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideout modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sidebarModalLabel">Profile & Options</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-avatar text-center mb-3">
+                    <img src="path_to_avatar.jpg" alt="Profile Avatar" class="rounded-circle" width="100">
+                </div>
+                <div class="member-since mb-3 text-center">
+                    <p>Member since: <strong> April 4</strong></p>
+                </div>
+                <div class="friends-section">
+                  <h5>Friends</h5>
+                  <select class="form-select" id="friendsDropdown">
+                      <option>Select a friend</option>
+                      <option>John Doe</option>
+                      <option>Jane Smith</option>
+                  </select>
+              </div>
+              <div class="history-section mt-4">
+                <h5>Transaction History</h5>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between">
+                        Transaction 1
+                        <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="View Details"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        Transaction 2
+                        <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="View Details"></i>
+                    </li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS and Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="chat.js"></script>
+
+</body>
+</html>
