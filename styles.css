@@ -130,6 +130,13 @@ body {
 }
 
 /* chat input */
+img.receipt-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
 .chat-input-container {
     display: flex;
     align-items: center;
@@ -143,6 +150,7 @@ body {
     background-color: #f8f9fa;
     border-top: 1px solid #ccc;
 }
+
 
 /* Sidebar */
 .sidebar {

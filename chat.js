@@ -1,86 +1,75 @@
-// Select elements from the DOM
-const chatMessages = document.getElementById("chatMessages");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const shareLinkBtn = document.getElementById("shareLinkBtn");
-const uploadReceiptBtn = document.getElementById("uploadReceiptBtn");
-const payOptionBtn = document.getElementById("payOptionBtn");
-const endChatBtn = document.getElementById("endChatBtn");
+// groupchat.js
+document.addEventListener('DOMContentLoaded', function () {
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const shareLinkBtn = document.getElementById('shareLinkBtn');
+    const uploadReceiptBtn = document.getElementById('uploadReceiptBtn');
+    const receiptInput = document.getElementById('receiptInput');
+    const receiptItemsContainer = document.getElementById('receiptItemsContainer');
 
-// Array to store messages (simulate local storage)
-let messages = JSON.parse(localStorage.getItem("messages")) || [];
+    // Function to send a message
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message !== '') {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'p-2', 'mb-2', 'bg-light', 'rounded');
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatInput.value = ''; // Clear input
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        }
+    }
 
-// Function to render messages in the chat
-function renderMessages() {
-    chatMessages.innerHTML = "";
-    messages.forEach(message => {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message");
-        messageDiv.textContent = message;
-        chatMessages.appendChild(messageDiv);
+    // Send message on button click
+    sendBtn.addEventListener('click', sendMessage);
+
+    // Option to share a link (you can modify the logic here)
+    shareLinkBtn.addEventListener('click', function () {
+        const link = prompt('Enter the link to share:');
+        if (link) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'p-2', 'mb-2', 'bg-light', 'rounded');
+            messageDiv.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        }
     });
-}
 
-// Event listener for sending messages
-sendBtn.addEventListener("click", () => {
-    const messageText = chatInput.value.trim();
-    if (messageText) {
-        // Add message to array
-        messages.push(messageText);
-        // Save to localStorage (simulating a real-time server)
-        localStorage.setItem("messages", JSON.stringify(messages));
-        // Clear input field
-        chatInput.value = "";
-        // Re-render messages
-        renderMessages();
+    // Upload receipt and process it
+    uploadReceiptBtn.addEventListener('click', function () {
+        receiptInput.click(); // Trigger hidden file input
+    });
+
+    receiptInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            // Use Tesseract to read the receipt
+            Tesseract.recognize(
+                file,
+                'eng',
+                {
+                    logger: (m) => console.log(m) // Optional: Log progress
+                }
+            ).then(({ data: { text } }) => {
+                // Process the text received from Tesseract
+                console.log(text);
+                displayReceiptItems(text);
+            });
+        }
+    });
+
+    function displayReceiptItems(text) {
+        // This function will parse the OCR text and display items
+        receiptItemsContainer.innerHTML = ''; // Clear previous items
+        const items = text.split('\n'); // Split by lines (you can refine this logic)
+        items.forEach(item => {
+            if (item.trim() !== '') {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('receipt-item', 'p-2', 'bg-light', 'mb-2', 'rounded');
+                itemDiv.textContent = item;
+                receiptItemsContainer.appendChild(itemDiv);
+            }
+        });
     }
-});
-
-// Event listener for pressing Enter to send message
-chatInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        sendBtn.click();
-    }
-});
-
-// Event listener for sharing link
-shareLinkBtn.addEventListener("click", () => {
-    const userNumber = prompt("Enter your phone number to receive a link to this chat:");
-    if (userNumber) {
-        alert(`Link sent to ${userNumber}`);
-        // Later: integrate actual link-sharing feature
-    }
-});
-
-// Event listener for uploading receipt
-uploadReceiptBtn.addEventListener("click", () => {
-    alert("Receipt upload functionality will go here.");
-    // Later: implement receipt upload, item selection, and calculation logic
-});
-
-// Event listener for choosing payment option
-payOptionBtn.addEventListener("click", () => {
-    alert("Redirecting to payment options...");
-    // Later: redirect to payment.html and integrate Stripe
-});
-
-// Event listener for ending chat (clear messages and localStorage)
-endChatBtn.addEventListener("click", () => {
-    if (confirm("Are you sure you want to end the chat? Messages will be cleared.")) {
-        messages = [];
-        localStorage.removeItem("messages");
-        renderMessages();
-    }
-});
-
-// Load existing messages when the page loads
-window.addEventListener("load", () => {
-    renderMessages();
-
-    // Automatically delete messages after 24 hours
-    setTimeout(() => {
-        localStorage.removeItem("messages");
-        messages = [];
-        renderMessages();
-    }, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
 });
