@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const message = chatInput.value.trim();
         if (message !== '') {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', 'p-2', 'mb-2', 'bg-light', 'rounded');
+            messageDiv.classList.add('box', 'mb-2'); // Use Bulma's box and margin-bottom classes
             messageDiv.textContent = message;
             chatMessages.appendChild(messageDiv);
             chatInput.value = ''; // Clear input
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const link = prompt('Enter the link to share:');
         if (link) {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', 'p-2', 'mb-2', 'bg-light', 'rounded');
+            messageDiv.classList.add('box', 'mb-2');
             messageDiv.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         items.forEach(item => {
             if (item.trim() !== '') {
                 const itemDiv = document.createElement('div');
-                itemDiv.classList.add('receipt-item', 'p-2', 'bg-light', 'mb-2', 'rounded');
+                itemDiv.classList.add('box', 'mb-2'); // Use Bulma's box class for item styling
                 itemDiv.textContent = item;
                 receiptItemsContainer.appendChild(itemDiv);
             }
