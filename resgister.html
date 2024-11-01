@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register - GroupPay</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/9a98403995.js" crossorigin="anonymous"></script>
+    <script type="module" src="register.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <h1 class="title is-1 has-text-centered mt-6">GroupPay</h1>
+
+                <p class="has-text-centered">Log in or Register to get started with GroupPay!</p>
+
+                <div class="box mt-5">
+                    <!-- Login Form -->
+                    <form id="loginForm">
+                        <h2 class="title is-4">Login</h2>
+                        <div class="field">
+                            <label class="label">Email address</label>
+                            <div class="control">
+                                <input type="email" class="input" id="loginEmail" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input type="password" class="input" id="loginPassword" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="button is-primary is-fullwidth">Login</button>
+                    </form>
+
+                    <div class="has-text-centered mt-4">
+                        <p>Or login with</p>
+                        <div class="buttons is-centered mt-2">
+                            <button class="button is-light">
+                                <span class="icon">
+                                    <i class="fab fa-google"></i>
+                                </span>
+                                <span>Google</span>
+                            </button>
+                            <button class="button is-light">
+                                <span class="icon">
+                                    <i class="fab fa-facebook"></i>
+                                </span>
+                                <span>Facebook</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Registration Form -->
+                    <form id="registerForm">
+                        <h2 class="title is-4">Register</h2>
+                        <div class="field">
+                            <label class="label">Email address</label>
+                            <div class="control">
+                                <input type="email" class="input" id="registerEmail" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input type="password" class="input" id="registerPassword" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="button is-success is-fullwidth">Register</button>
+                    </form>
+
+                    <div class="has-text-centered mt-4">
+                        <p>Or Register with</p>
+                        <div class="buttons is-centered mt-2">
+                            <button class="button is-light">
+                                <span class="icon">
+                                    <i class="fab fa-google"></i>
+                                </span>
+                                <span>Google</span>
+                            </button>
+                            <button class="button is-light">
+                                <span class="icon">
+                                    <i class="fab fa-facebook"></i>
+                                </span>
+                                <span>Facebook</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
