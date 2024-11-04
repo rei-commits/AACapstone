@@ -69,3 +69,6 @@ Clone or download Repository
 - [ ] Create payment integration
 - [ ] Add user profiles
 - [ ] Implement real-time notifications
+
+
+-This is a project I've been working on since early this year. It went by a different name but now I'm remodeling it.
