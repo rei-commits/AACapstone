@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const groupNamePreview = document.getElementById('groupNamePreview');
     const form = document.getElementById('createGroupForm');
     const emojiButton = document.getElementById('selectedEmoji');
-    
+
     emojiButton.addEventListener('click', () => {
         const picker = new EmojiMart.Picker({
             onEmojiSelect: (emoji) => {
@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             theme: 'light'
         });
-        
+
         if (!document.querySelector('.emoji-picker')) {
             document.getElementById('emojiPicker').appendChild(picker);
         }
-        
+
         const pickerElement = document.querySelector('.emoji-picker');
         if (pickerElement) {
-            pickerElement.style.display = 
+            pickerElement.style.display =
                 pickerElement.style.display === 'none' ? 'block' : 'none';
         }
     });
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const groupName = groupNameInput.value;
         const finalGroupName = `${groupName} Eats`;
-        
+
         const groupInfo = {
             id: Date.now(),
             name: finalGroupName,
@@ -64,6 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
         saveGroupToLocalStorage(groupInfo);
 
         console.log('Group created:', groupInfo);
+        window.location.href = 'group-chat.html';
+    });
+
+    document.getElementById('createGroupForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Get the group name and emoji
+        const groupName = document.getElementById('groupName').value;
+        const groupEmoji = document.getElementById('selectedEmoji').textContent;
+
+        // Store the group details in localStorage if needed
+        localStorage.setItem('groupName', groupName);
+        localStorage.setItem('groupEmoji', groupEmoji);
+
+        // Redirect to the group chat page
         window.location.href = 'group-chat.html';
     });
 });
