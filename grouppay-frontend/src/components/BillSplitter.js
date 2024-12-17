@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiUsers, FiDollarSign, FiPercent } from 'react-icons/fi';
+import { FiUsers, FiDollarSign } from 'react-icons/fi';
 import { createWorker } from 'tesseract.js';
 
 const BillSplitter = () => {
@@ -10,11 +10,7 @@ const BillSplitter = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [scannedItems, setScannedItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});  // { userId: [itemIds] }
-  const [participants, setParticipants] = useState([
-    // Example structure
-    { id: '1', name: 'John', initials: 'JD', color: 'bg-blue-100' },
-    { id: '2', name: 'Sarah', initials: 'SW', color: 'bg-pink-100' }
-  ]);
+  const [participants] = useState([]);
   const [userTotal, setUserTotal] = useState(0);
   const [tax, setTax] = useState('');
   const [scannerTip, setScannerTip] = useState('');
