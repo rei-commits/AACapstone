@@ -452,10 +452,10 @@ const LandingPage = () => {
             className="text-center mb-16 lg:mb-20"
           >
             <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Split Bills Like Never Before
+              Effortless Bill Splitting
             </h2>
             <p className={`text-lg lg:text-xl ${darkMode ? 'text-white/60' : 'text-gray-600'}`}>
-              Experience the future of expense sharing
+              Share expenses seamlessly with friends and family
             </p>
           </motion.div>
 

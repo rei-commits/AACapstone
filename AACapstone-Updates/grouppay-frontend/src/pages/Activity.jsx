@@ -33,29 +33,32 @@ const Activity = () => {
     {
       id: 1,
       type: 'sent',
-      title: 'Sent to Charly',
+      title: 'Sent to Charly for Cheese Steak',
+      description: 'Lunch at Philly Steaks',
       amount: -12.84,
       date: 'Today, 2:30 PM',
       status: 'Completed',
-      category: 'Transfer'
+      category: 'Food & Drinks'
     },
     {
       id: 2,
       type: 'received',
-      title: 'Received from Jonel',
+      title: 'Received from Jonel for Movie Night',
+      description: 'Tickets for Dune 2',
       amount: 17.12,
       date: 'Today, 10:15 AM',
       status: 'Completed',
-      category: 'Transfer'
+      category: 'Entertainment'
     },
     {
       id: 3,
       type: 'sent',
-      title: 'Sent to Tiana',
+      title: 'Sent to Tiana for Pizza',
+      description: 'Dinner at Pizza Place',
       amount: -15.50,
       date: 'Yesterday',
       status: 'Completed',
-      category: 'Transfer'
+      category: 'Food & Drinks'
     }
   ];
 
@@ -200,7 +203,8 @@ const Activity = () => {
                   {/* Transaction Details */}
                   <div>
                     <h3 className="font-medium text-gray-900 dark:text-white">{transaction.title}</h3>
-                    <div className="flex items-center gap-2">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{transaction.description}</p>
+                    <div className="flex items-center gap-2 mt-1">
                       <p className="text-sm text-gray-500 dark:text-gray-400">{transaction.date}</p>
                       <span className="text-sm px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                         {transaction.category}
