@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiBell, FiSend, FiUsers, FiClock, FiMoreHorizontal, FiHome, FiCamera, FiPieChart, FiUser, FiStar, FiTrendingUp, FiLogOut } from 'react-icons/fi';
+import { FiSearch, FiBell, FiSend, FiUsers, FiClock, FiMoreHorizontal, FiHome, FiCamera, FiPieChart, FiUser, FiStar, FiTrendingUp, FiLogOut, FiArrowDown, FiX } from 'react-icons/fi';
 import ThemeToggle from '../components/ThemeToggle';
 import LoadingState from '../components/LoadingState';
 import SwipeableHistoryItem from '../components/SwipeableHistoryItem';
@@ -28,6 +28,7 @@ const Dashboard = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const navigate = useNavigate();
 
   // Simulate loading state
@@ -103,6 +104,15 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <div className="px-2 py-2">
+                  <button
+                    onClick={() => navigate('/settings')}
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300
+                             rounded-xl flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700/50
+                             transition-colors duration-200"
+                  >
+                    <FiUser className="w-4 h-4" />
+                    Account & Settings
+                  </button>
                   <button
                     onClick={handleSignOut}
                     className="w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 
@@ -230,15 +240,26 @@ const Dashboard = () => {
             >
               <span>View History</span>
             </button>
-            <button 
-              onClick={() => setShowTopUpModal(true)}
-              aria-label="Add money to balance"
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-green-400 to-emerald-500
-                       hover:from-green-500 hover:to-emerald-600 transition-colors duration-200
-                       text-white font-medium shadow-lg shadow-green-500/20"
-            >
-              + Add Money
-            </button>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => setShowWithdrawModal(true)}
+                aria-label="Withdraw money to bank account"
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20
+                         transition-colors duration-200 flex items-center gap-2"
+              >
+                <FiArrowDown className="w-4 h-4" />
+                <span>Withdraw</span>
+              </button>
+              <button 
+                onClick={() => setShowTopUpModal(true)}
+                aria-label="Add money to balance"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-green-400 to-emerald-500
+                         hover:from-green-500 hover:to-emerald-600 transition-colors duration-200
+                         text-white font-medium shadow-lg shadow-green-500/20"
+              >
+                + Add Money
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -413,6 +434,85 @@ const Dashboard = () => {
                 <div className="w-full max-w-lg">
                   <Request onClose={() => setShowRequest(false)} />
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showWithdrawModal && (
+          <div className="fixed inset-0 z-50 bg-black/50">
+            <div className="min-h-screen overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl p-6"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-semibold">Withdraw Money</h2>
+                    <button
+                      onClick={() => setShowWithdrawModal(false)}
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl"
+                    >
+                      <FiX className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="space-y-6">
+                    {/* Amount Input */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Amount to Withdraw</label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                        <input
+                          type="number"
+                          placeholder="0.00"
+                          className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700
+                                   bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <p className="mt-2 text-sm text-gray-500">Available Balance: $165.43</p>
+                    </div>
+
+                    {/* Withdrawal Method */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Withdrawal Method</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button className="p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20">
+                          <div className="text-center">
+                            <p className="font-medium text-indigo-600 dark:text-indigo-400">Instant</p>
+                            <p className="text-xs text-gray-500 mt-1">1.5% fee</p>
+                            <p className="text-xs text-gray-500">~30 seconds</p>
+                          </div>
+                        </button>
+                        <button className="p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+                          <div className="text-center">
+                            <p className="font-medium">Standard</p>
+                            <p className="text-xs text-gray-500 mt-1">No fee</p>
+                            <p className="text-xs text-gray-500">1-3 business days</p>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Bank Account Selection */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Select Bank Account</label>
+                      <select className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700
+                                     bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500">
+                        <option value="chase">Chase - ****4567</option>
+                        <option value="add">+ Add New Account</option>
+                      </select>
+                    </div>
+
+                    {/* Withdraw Button */}
+                    <button className="w-full py-3 rounded-xl bg-indigo-500 text-white font-medium
+                                   hover:bg-indigo-600 transition-colors">
+                      Withdraw Money
+                    </button>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>

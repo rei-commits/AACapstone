@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Activity from './pages/Activity';
 import Stats from './pages/Stats';
+import Settings from './pages/Settings';
 
 // Feature Components
 import InstaSplit from './components/InstaSplit/InstaSplit';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/instasplit" element={<InstaSplit />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </Router>
     </ThemeProvider>
