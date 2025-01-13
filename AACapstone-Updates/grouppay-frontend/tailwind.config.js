@@ -1,26 +1,36 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // Enable dark mode using class strategy
+  darkMode: 'class',
+  
+  // Define content sources for Tailwind to process
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  
   theme: {
     extend: {
+      // Custom colors
+      colors: {
+        'background-light': '#F8FAFC',
+        'background-dark': '#0F172A',
+      },
+      
+      // Custom animation keyframes
       keyframes: {
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' }
         }
       },
+      
+      // Custom animation definitions
       animation: {
-        'slide-up': 'slideUp 1s ease-out',
-        'fade-in': 'fadeIn 1s ease-out',
+        shimmer: 'shimmer 1.5s infinite'
       }
     },
   },
+  
+  // Plugin configurations
   plugins: [
     require('@tailwindcss/forms'),
   ],

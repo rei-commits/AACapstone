@@ -1,24 +1,28 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getAnalytics } from "firebase/analytics";
+import { getStorage } from 'firebase/storage';
 
+/**
+ * Firebase configuration object
+ * Contains API keys and other configuration settings
+ * These values should be moved to environment variables in production
+ */
 const firebaseConfig = {
-  apiKey: "AIzaSyBmwUhMXj1N5InZmvz-yjV1MfJA_RTFQTo",
-  authDomain: "grouppay13.firebaseapp.com",
-  projectId: "grouppay13",
-  storageBucket: "grouppay13.firebasestorage.app",
-  messagingSenderId: "97278699831",
-  appId: "1:97278699831:web:3ce42d4b6490fb355f92b2",
-  measurementId: "G-M45DLHM53X"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
-// Initialize Firebase
+// Initialize Firebase app with configuration
 const app = initializeApp(firebaseConfig);
 
-// Initialize services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const analytics = getAnalytics(app);
+// Initialize Firebase services
+export const auth = getAuth(app);        // Authentication
+export const db = getFirestore(app);     // Firestore Database
+export const storage = getStorage(app);   // Storage
 
 export default app; 
