@@ -44,22 +44,32 @@ const Dashboard = () => {
 
     const parsedUser = JSON.parse(storedUser);
     setUser(parsedUser);
-    fetchUserData(parsedUser.id);
+    if (parsedUser.email) {
+      fetchUserData(parsedUser.email);
+    } else {
+      console.error('No email found in stored user data');
+      navigate('/login');
+    }
   }, [navigate]);
 
-  const fetchUserData = async (userId) => {
+  const fetchUserData = async (email) => {
     try {
       setIsLoading(true);
-      const [userBills, userDetails] = await Promise.all([
-        billApi.getUserBills(userId),
-        userApi.getUser(userId)
-      ]);
+      // Get user details from backend
+      const userDetails = await userApi.getUserByEmail(email);
+      
+      if (!userDetails || !userDetails.id) {
+        throw new Error('Invalid user details received');
+      }
+
+      // Get user's bills
+      const userBills = await billApi.getUserBills(userDetails.id);
 
       // Update user state with latest data
-      setUser(prevUser => ({
-        ...prevUser,
-        ...userDetails
-      }));
+      setUser(userDetails);
+      
+      // Store updated user data
+      localStorage.setItem('user', JSON.stringify(userDetails));
 
       // Transform bills into transactions
       const transformedTransactions = userBills.map(bill => ({
@@ -73,8 +83,10 @@ const Dashboard = () => {
       setTransactions(transformedTransactions);
     } catch (err) {
       console.error('Failed to fetch user data:', err);
-      // Show error in UI
-      // You might want to add an error state and display it in the UI
+      if (err.message === 'User not found' || err.message === 'Invalid user details received') {
+        localStorage.removeItem('user');
+        navigate('/login');
+      }
     } finally {
       setIsLoading(false);
     }

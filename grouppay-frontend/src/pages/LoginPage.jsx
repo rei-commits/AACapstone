@@ -49,21 +49,26 @@ const LoginPage = () => {
       const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
       const firebaseUser = userCredential.user;
       
-      // Fetch complete user data from backend
-      const backendUser = await userApi.getUser(1); // For now, using ID 1 since we have test data
+      try {
+        // Try to get existing user
+        const userDetails = await userApi.getUserByEmail(firebaseUser.email);
+        localStorage.setItem('user', JSON.stringify(userDetails));
+      } catch (error) {
+        if (error.message === 'User not found') {
+          // Create new user if not found
+          const newUser = await userApi.register({
+            email: firebaseUser.email,
+            fullName: firebaseUser.displayName || formData.email.split('@')[0],
+            password: 'firebase-auth', // placeholder password since auth is handled by Firebase
+            phoneNumber: firebaseUser.phoneNumber || ''
+          });
+          localStorage.setItem('user', JSON.stringify(newUser));
+        }
+      }
       
-      // Store complete user data in localStorage
-      localStorage.setItem('user', JSON.stringify({
-        ...backendUser,
-        firebaseUid: firebaseUser.uid,
-        email: firebaseUser.email
-      }));
-      
-      // Navigate to dashboard on successful login
       navigate('/dashboard');
-    } catch (err) {
-      console.error('Login error:', err);
-      setError(err.message || 'An error occurred during login');
+    } catch (error) {
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }

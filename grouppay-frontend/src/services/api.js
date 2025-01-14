@@ -34,6 +34,14 @@ export const userApi = {
         const response = await fetch(`${API_BASE_URL}/users/search?query=${encodeURIComponent(query)}`);
         return await response.json();
     },
+
+    getUserByEmail: async (email) => {
+        const response = await fetch(`${API_BASE_URL}/users/email/${encodeURIComponent(email)}`);
+        if (!response.ok) {
+            throw new Error('User not found');
+        }
+        return response.json();
+    },
 };
 
 // Group API calls
@@ -56,7 +64,8 @@ export const groupApi = {
 
     getUserGroups: async (userId) => {
         const response = await fetch(`${API_BASE_URL}/users/${userId}/groups`);
-        return await response.json();
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
     },
 
     addMember: async (groupId, userId) => {

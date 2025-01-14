@@ -17,6 +17,14 @@
     @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg;
   }
 
+  /* Wave Pattern Background */
+  .wave-pattern {
+    background-image: url('../assets/wave-pattern.svg');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+  }
+
   /* Gradient Text Effect */
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r 
