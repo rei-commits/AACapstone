@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiLock, FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi';
 import GroupPayLogo from '../components/Logo/GroupPayLogo';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { userApi } from '../services/api';
 
 /**
  * Login Page Component
- * Handles user authentication and login functionality
+ * Handles user authentication and login functionality using Firebase
  * Features email/password login with validation
  */
 const LoginPage = () => {
   // Navigation and form state
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(location.state?.message || '');
 
   // Form change handler
   const handleChange = (e) => {
@@ -30,22 +36,36 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Basic validation
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
 
+    setIsLoading(true);
+    setError('');
+
     try {
-      // Here you would typically make an API call to your backend
-      // For now, we'll simulate a successful login
-      console.log('Logging in with:', formData);
+      // Sign in with Firebase
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const firebaseUser = userCredential.user;
+      
+      // Fetch complete user data from backend
+      const backendUser = await userApi.getUser(1); // For now, using ID 1 since we have test data
+      
+      // Store complete user data in localStorage
+      localStorage.setItem('user', JSON.stringify({
+        ...backendUser,
+        firebaseUid: firebaseUser.uid,
+        email: firebaseUser.email
+      }));
       
       // Navigate to dashboard on successful login
       navigate('/dashboard');
     } catch (err) {
-      setError('Invalid email or password');
       console.error('Login error:', err);
+      setError(err.message || 'An error occurred during login');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,6 +108,19 @@ const LoginPage = () => {
           transition={{ delay: 0.2 }}
           className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 space-y-6"
         >
+          <AnimatePresence>
+            {successMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="p-3 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-500 text-sm"
+              >
+                {successMessage}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
@@ -164,12 +197,14 @@ const LoginPage = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
+              disabled={isLoading}
               className="w-full py-2 px-4 bg-gradient-to-r from-indigo-500 to-purple-500 
                        hover:from-indigo-600 hover:to-purple-600
                        text-white font-medium rounded-xl shadow-lg
-                       transition-all duration-200"
+                       transition-all duration-200
+                       disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign In
+              {isLoading ? 'Signing In...' : 'Sign In'}
             </motion.button>
           </form>
 

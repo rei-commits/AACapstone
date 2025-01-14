@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiLock, FiUser, FiArrowLeft, FiCheck, FiX, FiEye, FiEyeOff } from 'react-icons/fi';
 import GroupPayLogo from '../components/Logo/GroupPayLogo';
 import PasswordStrength from '../components/PasswordStrength';
+import { userApi } from '../services/api';
 
 /**
  * Signup Page Component
@@ -13,19 +14,22 @@ import PasswordStrength from '../components/PasswordStrength';
 const SignupPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    phoneNumber: ''
   });
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   const validateField = (name, value) => {
     switch (name) {
-      case 'name':
+      case 'fullName':
         return value.length < 2 ? 'Name is too short' : '';
       case 'email':
         return !/\S+@\S+\.\S+/.test(value) ? 'Invalid email address' : '';
@@ -33,6 +37,8 @@ const SignupPage = () => {
         return value.length < 8 ? 'Password must be at least 8 characters' : '';
       case 'confirmPassword':
         return value !== formData.password ? 'Passwords do not match' : '';
+      case 'phoneNumber':
+        return !/^\d{10}$/.test(value) ? 'Phone number must be 10 digits' : '';
       default:
         return '';
     }
@@ -47,6 +53,7 @@ const SignupPage = () => {
         [name]: validateField(name, value)
       }));
     }
+    if (apiError) setApiError('');
   };
 
   const handleBlur = (e) => {
@@ -58,7 +65,7 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
     Object.keys(formData).forEach(key => {
@@ -68,7 +75,30 @@ const SignupPage = () => {
     
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      // Handle signup logic
+      setIsLoading(true);
+      setApiError('');
+      
+      try {
+        const userData = {
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          phoneNumber: formData.phoneNumber
+        };
+        
+        const response = await userApi.register(userData);
+        if (response.id) {
+          navigate('/login', { 
+            state: { message: 'Account created successfully! Please log in.' }
+          });
+        } else {
+          setApiError('Registration failed. Please try again.');
+        }
+      } catch (error) {
+        setApiError(error.message || 'An error occurred during registration.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -118,26 +148,26 @@ const SignupPage = () => {
                 <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="John Doe"
                   className={`w-full pl-10 pr-4 py-2 rounded-xl border
-                           ${errors.name && touched.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700'}
+                           ${errors.fullName && touched.fullName ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700'}
                            bg-white dark:bg-gray-900 
                            focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
                            transition-all duration-200`}
                 />
                 <AnimatePresence>
-                  {touched.name && (
+                  {touched.fullName && (
                     <motion.div
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 20 }}
                       className="absolute right-3 top-1/2 -translate-y-1/2"
                     >
-                      {errors.name ? (
+                      {errors.fullName ? (
                         <FiX className="text-red-500" />
                       ) : (
                         <FiCheck className="text-green-500" />
@@ -146,13 +176,13 @@ const SignupPage = () => {
                   )}
                 </AnimatePresence>
               </div>
-              {touched.name && errors.name && (
+              {touched.fullName && errors.fullName && (
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-red-500 text-sm mt-1"
                 >
-                  {errors.name}
+                  {errors.fullName}
                 </motion.p>
               )}
             </div>
@@ -163,14 +193,88 @@ const SignupPage = () => {
                 <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   placeholder="you@example.com"
-                  className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700
+                  className={`w-full pl-10 pr-4 py-2 rounded-xl border
+                           ${errors.email && touched.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700'}
                            bg-white dark:bg-gray-900 
                            focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
-                           transition-all duration-200"
-                  required
+                           transition-all duration-200`}
                 />
+                <AnimatePresence>
+                  {touched.email && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2"
+                    >
+                      {errors.email ? (
+                        <FiX className="text-red-500" />
+                      ) : (
+                        <FiCheck className="text-green-500" />
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+              {touched.email && errors.email && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-1"
+                >
+                  {errors.email}
+                </motion.p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Phone Number</label>
+              <div className="relative">
+                <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="1234567890"
+                  className={`w-full pl-10 pr-4 py-2 rounded-xl border
+                           ${errors.phoneNumber && touched.phoneNumber ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700'}
+                           bg-white dark:bg-gray-900 
+                           focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
+                           transition-all duration-200`}
+                />
+                <AnimatePresence>
+                  {touched.phoneNumber && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2"
+                    >
+                      {errors.phoneNumber ? (
+                        <FiX className="text-red-500" />
+                      ) : (
+                        <FiCheck className="text-green-500" />
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              {touched.phoneNumber && errors.phoneNumber && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm mt-1"
+                >
+                  {errors.phoneNumber}
+                </motion.p>
+              )}
             </div>
 
             <div>
@@ -237,16 +341,28 @@ const SignupPage = () => {
               )}
             </div>
 
+            {apiError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-50 dark:bg-red-900/30 text-red-500 p-3 rounded-xl text-sm"
+              >
+                {apiError}
+              </motion.div>
+            )}
+
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
+              disabled={isLoading}
               className="w-full py-2 px-4 bg-gradient-to-r from-indigo-500 to-purple-500 
                        hover:from-indigo-600 hover:to-purple-600
                        text-white font-medium rounded-xl shadow-lg
-                       transition-all duration-200"
+                       transition-all duration-200
+                       disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Account
+              {isLoading ? 'Creating Account...' : 'Create Account'}
             </motion.button>
           </form>
 
