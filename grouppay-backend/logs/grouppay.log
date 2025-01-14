@@ -1178,3 +1178,8 @@ Identify and stop the process that's listening on port 8081 or configure this ap
 2025-01-14 11:28:42 [http-nio-8081-exec-2] INFO  c.e.g.c.RequestLoggingInterceptor - Response Status: 200
 2025-01-14 11:30:56 [http-nio-8081-exec-4] INFO  c.e.g.c.RequestLoggingInterceptor - Request URL: POST /api/users null
 2025-01-14 11:30:56 [http-nio-8081-exec-4] INFO  c.e.g.c.RequestLoggingInterceptor - Response Status: 200
+2025-01-14 11:38:01 [http-nio-8081-exec-6] INFO  c.e.g.c.RequestLoggingInterceptor - Request URL: OPTIONS /api/users/login null
+2025-01-14 11:38:01 [http-nio-8081-exec-6] INFO  c.e.g.c.RequestLoggingInterceptor - Response Status: 200
+2025-01-14 11:44:16 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-14 11:44:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-14 11:44:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
