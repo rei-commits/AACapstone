@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="320" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,160 C320,220 520,100 720,100 C920,100 1120,220 1440,160 L1440,320 L0,320 Z" fill="white" fill-opacity="0.1"/>
+  <path d="M0,180 C320,240 520,120 720,120 C920,120 1120,240 1440,180 L1440,320 L0,320 Z" fill="white" fill-opacity="0.05"/>
+</svg> 
