@@ -1,0 +1,31 @@
+{
+  "properties": [
+    {
+      "name": "firebase.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable/disable Firebase integration",
+      "defaultValue": true
+    },
+    {
+      "name": "firebase.config-file",
+      "type": "java.lang.String",
+      "description": "Firebase service account configuration file path"
+    },
+    {
+      "name": "firebase.storage.bucket",
+      "type": "java.lang.String",
+      "description": "Firebase storage bucket name"
+    },
+    {
+      "name": "tesseract.dataPath",
+      "type": "java.lang.String",
+      "description": "Path to Tesseract data files"
+    },
+    {
+      "name": "tesseract.language",
+      "type": "java.lang.String",
+      "description": "Language for Tesseract OCR",
+      "defaultValue": "eng"
+    }
+  ]
+} 
