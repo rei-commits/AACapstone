@@ -146,3 +146,19 @@ The application will be available at `http://localhost:5176`
 - 🏢 Multi-team support
 - 📄 Custom branding options
 - 🔍 Advanced search and filtering
+
+### Backend Setup
+
+1. Configure the database:
+   - Copy `application.properties.template` to `application.properties`
+   - Set your MySQL credentials either in the file or as environment variables:
+     ```bash
+     export MYSQL_USER=your_username
+     export MYSQL_PASSWORD=your_password
+     ```
+
+2. Install dependencies:
+   ```bash
+   cd tallybackend
+   mvn install
+   ```

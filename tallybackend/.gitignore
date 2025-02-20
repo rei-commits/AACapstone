@@ -2,7 +2,7 @@ HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/test/**/target/
+!**/src/test/**/build/
 
 ### STS ###
 .apt_generated
@@ -34,3 +34,21 @@ build/
 
 src/main/resources/firebase-service-account.json
 **/firebase-service-account.json
+
+# Sensitive configuration
+src/main/resources/application.properties
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Compiled files
+target/
+*.class
+
+# Logs
+*.log
+
+# Local environment variables
+.env
