@@ -29,7 +29,7 @@ export default function CreateBillModal({ isOpen, onClose, onBillCreated }) {
   const handleReceiptScan = (result) => {
     console.log('Scanned result:', result);
     
-    // Process the items from the receipt and add unique IDs
+    // Combining duplicate items to keep things clean
     const uniqueItems = result.items.reduce((acc, item) => {
       const existingItem = acc.find(i => i.name === item.name && i.price === item.price);
       if (existingItem) {
@@ -37,26 +37,20 @@ export default function CreateBillModal({ isOpen, onClose, onBillCreated }) {
       } else {
         acc.push({
           ...item,
-          id: `item-${acc.length + 1}`, // Add unique ID
+          id: `item-${acc.length + 1}`, // Need unique IDs for React keys
           quantity: item.quantity || 1
         });
       }
       return acc;
     }, []);
 
-    // Set scanned items only once
+    // Reset everything when scanning new receipt
     setScannedItems(uniqueItems);
-    
-    // Set tax and tip
     setTaxAndTip({
       tax: result.tax || 0,
       tip: 0
     });
-    
-    // Clear any existing assignments when new receipt is scanned
     setItemAssignments({});
-    
-    console.log('Processed items:', uniqueItems);
   };
 
   const handleTipChange = (newTip) => {

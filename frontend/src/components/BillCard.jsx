@@ -20,7 +20,7 @@ export default function BillCard({ bill, onMarkAsPaid, onDelete }) {
     return (itemsTotal + Number(bill.tax) + Number(bill.tip)).toFixed(2);
   };
 
-  // Consolidate duplicate items
+  // Need to consolidate duplicate items to keep the list clean
   const consolidatedItems = bill.items.reduce((acc, item) => {
     const existingItem = acc.find(i => i.name === item.name && i.price === item.price);
     if (existingItem) {
@@ -36,7 +36,7 @@ export default function BillCard({ bill, onMarkAsPaid, onDelete }) {
       whileHover={{ y: -2 }}
       className="bg-[#1a1b2e] rounded-xl p-4 hover:shadow-xl transition-all"
     >
-      {/* Header */}
+      {/* Header Section */}
       <div className="flex justify-between items-center mb-2">
         <div>
           <h3 className="text-white text-lg font-semibold">
